@@ -1,18 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
     tools:context=".MainActivity">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="LIA"
+        android:id="@+id/title"
+        android:textStyle="bold"
+        android:textSize="60sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:textColor="@color/Black"
+        />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/txtEmail"
+            android:layout_below="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:layout_marginLeft="15dp"
+            android:text="Email:"
+            android:textSize="15sp"
+            android:textColor="@color/Black"/>
+
+        <EditText
+            android:id="@+id/editEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/txtEmail"
+            android:layout_marginTop="45dp"
+            android:layout_marginLeft="5dp"
+            android:layout_below="@+id/title"
+            android:hint="Email"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/txtPass"
+            android:layout_below="@+id/txtEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:layout_marginLeft="15dp"
+            android:text="Palavra-Passe: "
+            android:textSize="15sp"
+            android:textColor="@color/Black"/>
+
+        <EditText
+            android:id="@+id/editPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/txtPass"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_below="@+id/editEmail"
+            android:hint="Palavra-Passe"
+            android:inputType="textPassword"
+            android:textAlignment="center"/>
+
+        <Button
+            android:id="@+id/btnEntrar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editPass"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:text="Entrar"
+            android:onClick="btnLogin"
+            android:textSize="20sp" />
+
+
+
+    </RelativeLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>
+
