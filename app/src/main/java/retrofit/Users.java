@@ -22,7 +22,7 @@ public class Users {
 
     @SerializedName("grupo_id")
     @Expose
-    private String grupo_id;
+    private Integer grupo_id;
 
     @SerializedName("numero_mecanografico")
     @Expose
@@ -73,11 +73,11 @@ public class Users {
         this.password = password;
     }
 
-    public String getGrupo_id() {
+    public Integer getGrupo_id() {
         return grupo_id;
     }
 
-    public void setGrupo_id(String grupo_id) {
+    public void setGrupo_id(Integer grupo_id) {
         this.grupo_id = grupo_id;
     }
 

@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putInt("userid", user.getId());
                     editor.putString("apitoken", user.getApi_token());
-                    editor.putString("grupoid", user.getGrupo_id());
+                    editor.putInt("grupoid", user.getGrupo_id());
                     editor.apply();
                     Intent i = new Intent(MainActivity.this, ItemActivity.class);
                     startActivity(i);
