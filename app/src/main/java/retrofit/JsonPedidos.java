@@ -6,8 +6,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
-import java.util.ArrayList;
-import java.util.Collection;
+import retrofit2.http.Path;
 
 public interface JsonPedidos {
     @POST("login")
@@ -27,6 +26,14 @@ public interface JsonPedidos {
             @Header("Authorization")
                     String token,
             @Header("UserId")
+                    Integer id
+    );
+
+    @GET("item/{id}")
+    Call<Atributo> getItemId(
+            @Header("Authorization")
+                    String token,
+            @Path("id")
                     Integer id
     );
 }

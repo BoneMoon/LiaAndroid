@@ -2,6 +2,7 @@ package com.example.lia;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,7 +10,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -31,20 +35,20 @@ import static com.example.lia.MainActivity.SHARED_PREFS;
 public class ItemActivity extends AppCompatActivity {
     ItemAtributo itens;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
-
         getItem();
+        getItemID();
     }
 
     public void getItem(){
         SharedPreferences preferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         String token = preferences.getString("apitoken", "");
         Integer userId = preferences.getInt("userid", 0);
-        //Log.i("tag", token);
-        //Log.i("tag", userId.toString());
         JsonPedidos service = RetrofitClientInstance.getRetrofitInstance().create(JsonPedidos.class);
         Call<ItemAtributo> itemCall = service.GetItem(token, userId);
 
@@ -63,6 +67,19 @@ public class ItemActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ItemAtributo> call, Throwable t) {
                 Toast.makeText(ItemActivity.this, "Fail!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void getItemID(){
+        ListView item = findViewById(R.id.lista);
+
+        item.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent i = new Intent(ItemActivity.this, getItemActivity.class);
+                startActivity(i);
             }
         });
     }
@@ -114,5 +131,4 @@ public class ItemActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }
