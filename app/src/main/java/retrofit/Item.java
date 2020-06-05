@@ -34,7 +34,8 @@ public class Item {
     @Expose
     private Atributo atributo;
 
-    public Item(String name, Integer id_atributos, String observacoes){
+    public Item(Integer id, String name, Integer id_atributos, String observacoes){
+        this.id = id;
         this.name = name;
         this.id_atributos = id_atributos;
         this.observacoes = observacoes;

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -62,13 +63,20 @@ public class ItemActivity extends AppCompatActivity {
     }
 
     public void getItemID(){
-        ListView item = findViewById(R.id.lista);
+        final ListView item = findViewById(R.id.lista);
 
         item.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                String name = ((CustomAdapter)item.getAdapter()).getItem(position).getName();
+                Integer idItem = ((CustomAdapter)item.getAdapter()).getItem(position).getId();
+
                 Intent i = new Intent(ItemActivity.this, getItemActivity.class);
+
+                i.putExtra("name", name);
+                i.putExtra("idItem", idItem);
+
                 startActivity(i);
             }
         });

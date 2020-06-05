@@ -1,9 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".getItemActivity">
+    tools:context=".getItemActivity"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/nameItem"
+                tools:text="Nome Item"
+                android:textColor="@color/colorPrimaryLight"
+                android:layout_marginTop="50dp"
+                android:layout_centerHorizontal="true"
+                android:textAlignment="center"
+                android:textSize="30dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/TitMarca"
+                android:text="Marca: "
+                android:textColor="@color/colorPrimaryLight"
+                android:layout_below="@+id/nameItem"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="50dp"
+                android:textSize="20dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/marca"
+                tools:text="XXXXXXXXXXX"
+                android:textColor="@color/colorPrimaryLight"
+                android:layout_below="@+id/nameItem"
+                android:layout_toRightOf="@+id/TitMarca"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="60dp"
+                android:textSize="20dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/TitModelo"
+                android:text="Modelo: "
+                android:textColor="@color/colorPrimaryLight"
+                android:layout_below="@+id/TitMarca"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="50dp"
+                android:textSize="20dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/modelo"
+                tools:text="XXXXXXXXXXX"
+                android:textColor="@color/colorPrimaryLight"
+                android:layout_below="@+id/marca"
+                android:layout_toRightOf="@+id/TitModelo"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="60dp"
+                android:textSize="20dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/TitDesc"
+                android:text="Descrição: "
+                android:textColor="@color/colorPrimaryLight"
+                android:layout_below="@+id/TitModelo"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="50dp"
+                android:textSize="20dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/descricao"
+                tools:text="XXXXXXXXXXX"
+                android:textColor="@color/colorPrimaryLight"
+                android:layout_below="@+id/modelo"
+                android:layout_toRightOf="@+id/TitDesc"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="60dp"
+                android:textSize="20dp"
+                />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
