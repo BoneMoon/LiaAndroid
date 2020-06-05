@@ -29,6 +29,14 @@ public interface JsonPedidos {
                     Integer id
     );
 
+    @GET("kits")
+    Call<KitsAtributos> GetKit(
+            @Header("Authorization")
+                    String token,
+            @Header("UserId")
+                    Integer id
+    );
+
     @GET("item/{id}")
     Call<Atributo> getItemId(
             @Header("Authorization")

@@ -8,14 +8,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import adapter.CustomAdapter;
+import adapter.CustomAdapterKit;
 import retrofit.ItemAtributo;
 import retrofit.JsonPedidos;
+import retrofit.Kit;
+import retrofit.KitsAtributos;
 import retrofit.RetrofitClientInstance;
 import retrofit.Users;
 import retrofit2.Call;
@@ -24,52 +25,40 @@ import retrofit2.Response;
 
 import static com.example.lia.MainActivity.SHARED_PREFS;
 
-public class ItemActivity extends AppCompatActivity {
-    ItemAtributo itens;
+public class KitActivity extends AppCompatActivity {
+    KitsAtributos kits;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item);
-        getItem();
-        getItemID();
+        setContentView(R.layout.activity_kit);
+
+        getKit();
     }
 
-    public void getItem(){
+    public void getKit(){
         SharedPreferences preferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         String token = preferences.getString("apitoken", "");
         Integer userId = preferences.getInt("userid", 0);
-        JsonPedidos service = RetrofitClientInstance.getRetrofitInstance().create(JsonPedidos.class);
-        Call<ItemAtributo> itemCall = service.GetItem(token, userId);
 
-        itemCall.enqueue(new Callback<ItemAtributo>() {
+        JsonPedidos service = RetrofitClientInstance.getRetrofitInstance().create(JsonPedidos.class);
+        Call<KitsAtributos> kitCall = service.GetKit(token, userId);
+
+        kitCall.enqueue(new Callback<KitsAtributos>() {
             @Override
-            public void onResponse(Call<ItemAtributo> call, Response<ItemAtributo> response) {
+            public void onResponse(Call<KitsAtributos> call, Response<KitsAtributos> response) {
                 if(response.body() != null){
-                    itens = response.body();
-                    CustomAdapter itens_adapter = new CustomAdapter(getApplicationContext(), itens.getItensatributos());
-                    ((ListView) findViewById(R.id.lista)).setAdapter(itens_adapter);
+                    kits = response.body();
+                    CustomAdapterKit kits_adapter = new CustomAdapterKit(getApplicationContext(), kits.getKitsatrobutos());
+                    ((ListView) findViewById(R.id.lista)).setAdapter(kits_adapter);
                 }else{
-                    Toast.makeText(ItemActivity.this, "Não há itens!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(KitActivity.this, "Não há itens!", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<ItemAtributo> call, Throwable t) {
-                Toast.makeText(ItemActivity.this, "Fail!", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    public void getItemID(){
-        ListView item = findViewById(R.id.lista);
-
-        item.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Intent i = new Intent(ItemActivity.this, getItemActivity.class);
-                startActivity(i);
+            public void onFailure(Call<KitsAtributos> call, Throwable t) {
+                Toast.makeText(KitActivity.this, "Fail", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -95,13 +84,13 @@ public class ItemActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<Users> call, Response<Users> response) {
                             Toast.makeText(getApplicationContext(), "Logout com sucesso", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(ItemActivity.this, MainActivity.class);
+                            Intent intent = new Intent(KitActivity.this, MainActivity.class);
                             startActivity(intent);
                         }
 
                         @Override
                         public void onFailure(Call<Users> call, Throwable t) {
-                            Toast.makeText(ItemActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(KitActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -109,11 +98,11 @@ public class ItemActivity extends AppCompatActivity {
                 return true;
 
             case R.id.item:
-                return true;
+                Intent intent = new Intent(KitActivity.this, ItemActivity.class);
+                startActivity(intent);
 
             case R.id.kits:
-                Intent intent = new Intent(ItemActivity.this, KitActivity.class);
-                startActivity(intent);
+                return true;
 
             case R.id.carrinho:
                 return true;
