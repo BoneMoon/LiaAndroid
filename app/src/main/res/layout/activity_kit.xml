@@ -14,7 +14,7 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lista"
+        android:id="@+id/listaKit"
         android:dividerHeight="20dp"
         android:divider="@color/white"
         />

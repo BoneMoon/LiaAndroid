@@ -8,9 +8,9 @@ import java.util.List;
 public class KitsAtributos {
     @SerializedName("kits")
     @Expose
-    private List<Kit> kitsatrobutos;
+    private List<Kit> kitsatributos;
 
-    public List<Kit> getKitsatrobutos() {
-        return kitsatrobutos;
+    public List<Kit> getKitsatributos() {
+        return kitsatributos;
     }
 }

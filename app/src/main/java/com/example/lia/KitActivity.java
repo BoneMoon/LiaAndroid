@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -34,6 +37,7 @@ public class KitActivity extends AppCompatActivity {
         setContentView(R.layout.activity_kit);
 
         getKit();
+        getKitId();
     }
 
     public void getKit(){
@@ -49,16 +53,37 @@ public class KitActivity extends AppCompatActivity {
             public void onResponse(Call<KitsAtributos> call, Response<KitsAtributos> response) {
                 if(response.body() != null){
                     kits = response.body();
-                    CustomAdapterKit kits_adapter = new CustomAdapterKit(getApplicationContext(), kits.getKitsatrobutos());
-                    ((ListView) findViewById(R.id.lista)).setAdapter(kits_adapter);
+                    CustomAdapterKit kits_adapter = new CustomAdapterKit(getApplicationContext(), kits.getKitsatributos());
+                    ((ListView) findViewById(R.id.listaKit)).setAdapter(kits_adapter);
                 }else{
-                    Toast.makeText(KitActivity.this, "Não há itens!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(KitActivity.this, "Não há kits!", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<KitsAtributos> call, Throwable t) {
                 Toast.makeText(KitActivity.this, "Fail", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void getKitId(){
+        final ListView kit = findViewById(R.id.listaKit);
+
+        kit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                String nome = ((CustomAdapterKit)kit.getAdapter()).getItem(position).getName();
+                int idK = ((CustomAdapterKit)kit.getAdapter()).getItem(position).getId();
+                //Log.i("tag", idK);
+
+                Intent i = new Intent(KitActivity.this, getKitActivity.class);
+
+                i.putExtra("nome", nome);
+                i.putExtra("idK", idK);
+
+                startActivity(i);
             }
         });
     }

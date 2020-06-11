@@ -29,7 +29,7 @@ public interface JsonPedidos {
                     Integer id
     );
 
-    @GET("kits")
+    @GET("kit")
     Call<KitsAtributos> GetKit(
             @Header("Authorization")
                     String token,
@@ -39,6 +39,14 @@ public interface JsonPedidos {
 
     @GET("item/{id}")
     Call<Atributo> getItemId(
+            @Header("Authorization")
+                    String token,
+            @Path("id")
+                    Integer id
+    );
+
+    @GET("kit/{id}")
+    Call<KitId> getKitId(
             @Header("Authorization")
                     String token,
             @Path("id")
