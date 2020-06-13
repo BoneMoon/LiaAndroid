@@ -40,6 +40,7 @@ public class ItemActivity extends AppCompatActivity {
     DatePickerDialog picker2;
     EditText data1;
     EditText data2;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
