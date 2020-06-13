@@ -2,17 +2,26 @@ package com.example.lia;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CalendarView;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+
+import java.util.Calendar;
 
 import adapter.CustomAdapter;
 import retrofit.ItemAtributo;
@@ -27,6 +36,10 @@ import static com.example.lia.MainActivity.SHARED_PREFS;
 
 public class ItemActivity extends AppCompatActivity {
     ItemAtributo itens;
+    DatePickerDialog picker;
+    DatePickerDialog picker2;
+    EditText data1;
+    EditText data2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +47,48 @@ public class ItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_item);
         getItem();
         getItemID();
+
+        data1 = findViewById(R.id.dataPicker1);
+        data2 = findViewById(R.id.dataPicker2);
+
+
+        data1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar cldr = Calendar.getInstance();
+                int day = cldr.get(Calendar.DAY_OF_MONTH);
+                int moth = cldr.get(Calendar.MONTH);
+                int year = cldr.get(Calendar.YEAR);
+
+                picker = new DatePickerDialog(ItemActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                data1.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                            }
+                        }, year, moth, day);
+                picker.show();
+            }
+        });
+
+        data2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar cldr = Calendar.getInstance();
+                int day = cldr.get(Calendar.DAY_OF_MONTH);
+                int moth = cldr.get(Calendar.MONTH);
+                int year = cldr.get(Calendar.YEAR);
+
+                picker2 = new DatePickerDialog(ItemActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                data2.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                            }
+                        }, year, moth, day);
+                picker2.show();
+            }
+        });
     }
 
     public void getItem(){
@@ -131,6 +186,16 @@ public class ItemActivity extends AppCompatActivity {
 
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void btnPesquisa(View view) {
+        if (data1.getText().toString().equals("")){
+            Toast.makeText(ItemActivity.this, "As datas têm que estar preenchidas!", Toast.LENGTH_SHORT).show();
+        } else if (data2.getText().toString().equals("")){
+            Toast.makeText(ItemActivity.this, "As datas têm que estar preenchidas!", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(ItemActivity.this, "Pesquisa com sucesso!", Toast.LENGTH_SHORT).show();
         }
     }
 }

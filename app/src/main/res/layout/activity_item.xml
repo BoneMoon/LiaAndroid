@@ -11,12 +11,87 @@
     android:paddingTop="16dp"
     tools:context=".ItemActivity">
 
-    <ListView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lista"
-        android:dividerHeight="20dp"
-        android:divider="@color/white"
+        android:id="@+id/titulo"
+        android:layout_centerHorizontal="true"
+        android:text="ITENS"
+        android:textSize="50dp"
+        android:textColor="@color/colorPrimaryLight"
         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/data1"
+        android:layout_centerHorizontal="true"
+        android:text="Data de Inicio:"
+        android:textColor="@color/colorPrimaryLight"
+        android:layout_below="@+id/titulo"
+        android:layout_marginTop="30dp"
+        android:layout_alignParentLeft="true"
+        android:textSize="20dp"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dataPicker1"
+        tools:text="XXXXXXXXXXXXXXX"
+        android:layout_toRightOf="@id/data1"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@id/titulo"
+        android:textColor="@color/colorPrimaryLight"
+        android:layout_marginTop="20dp"
+        android:textSize="20dp"
+        android:inputType="date"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/data2"
+        android:layout_centerHorizontal="true"
+        android:text="Data de Fim:"
+        android:textColor="@color/colorPrimaryLight"
+        android:layout_below="@+id/data1"
+        android:layout_marginTop="30dp"
+        android:layout_alignParentLeft="true"
+        android:textSize="20dp"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dataPicker2"
+        tools:text="XXXXXXXXXXXXXXX"
+        android:layout_toRightOf="@id/data2"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@id/dataPicker1"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/colorPrimaryLight"
+        android:textSize="20dp"
+        android:inputType="date"
+        />
+
+    <Button
+        android:id="@+id/pesquisa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pesquisar"
+        android:onClick="btnPesquisa"
+        android:layout_below="@id/dataPicker2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+    <ListView
+        android:id="@+id/lista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pesquisa"
+        android:layout_marginTop="20dp"
+        android:divider="@color/white"
+        android:dividerHeight="20dp" />
 
 </RelativeLayout>
