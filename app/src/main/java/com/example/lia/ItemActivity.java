@@ -127,11 +127,13 @@ public class ItemActivity extends AppCompatActivity {
 
                 String name = ((CustomAdapter)item.getAdapter()).getItem(position).getName();
                 Integer idItem = ((CustomAdapter)item.getAdapter()).getItem(position).getId();
+                Integer idAtributo = ((CustomAdapter)item.getAdapter()).getItem(position).getId_atributos();
 
                 Intent i = new Intent(ItemActivity.this, getItemActivity.class);
 
                 i.putExtra("name", name);
                 i.putExtra("idItem", idItem);
+                i.putExtra("idAtributo", idAtributo);
 
                 startActivity(i);
             }
@@ -176,11 +178,12 @@ public class ItemActivity extends AppCompatActivity {
                 return true;
 
             case R.id.kits:
-                Intent intent = new Intent(ItemActivity.this, KitActivity.class);
+                Intent intent = new Intent(ItemActivity.this, CarrinhoActivity.class);
                 startActivity(intent);
 
             case R.id.carrinho:
-                return true;
+                Intent i = new Intent(ItemActivity.this, KitActivity.class);
+                startActivity(i);
 
             case R.id.reserva:
                 return true;

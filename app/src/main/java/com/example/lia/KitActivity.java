@@ -128,12 +128,14 @@ public class KitActivity extends AppCompatActivity {
 
                 String nome = ((CustomAdapterKit)kit.getAdapter()).getItem(position).getName();
                 int idK = ((CustomAdapterKit)kit.getAdapter()).getItem(position).getId();
-                //Log.i("tag", idK);
+                int idAtributo = ((CustomAdapterKit)kit.getAdapter()).getItem(position).getId_atributos();
+
 
                 Intent i = new Intent(KitActivity.this, getKitActivity.class);
 
                 i.putExtra("nome", nome);
                 i.putExtra("idK", idK);
+                i.putExtra("id_atributos", idAtributo);
 
                 startActivity(i);
             }
@@ -182,7 +184,8 @@ public class KitActivity extends AppCompatActivity {
                 return true;
 
             case R.id.carrinho:
-                return true;
+                Intent i = new Intent(KitActivity.this, CarrinhoActivity.class);
+                startActivity(i);
 
             case R.id.reserva:
                 return true;

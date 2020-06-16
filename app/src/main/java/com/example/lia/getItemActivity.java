@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import retrofit.Atributo;
+import retrofit.IdItemKit;
 import retrofit.JsonPedidos;
 import retrofit.RetrofitClientInstance;
 import retrofit2.Call;
@@ -26,6 +27,7 @@ public class getItemActivity extends AppCompatActivity {
     private TextView descricao;
 
     private Integer idItem;
+    private Integer idAtributo;
     private String token;
 
     @Override
@@ -40,6 +42,7 @@ public class getItemActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         idItem = i.getIntExtra("idItem", 0);
+        idAtributo = i.getIntExtra("idAtributo", 0);
 
         SharedPreferences preferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         token = preferences.getString("apitoken", "api");
@@ -71,5 +74,27 @@ public class getItemActivity extends AppCompatActivity {
 
 
     public void btnCarrinho(View view) {
+        SharedPreferences preferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+        token = preferences.getString("apitoken", "api");
+        Integer userId = preferences.getInt("userid", 0);
+
+        JsonPedidos service = RetrofitClientInstance.getRetrofitInstance().create(JsonPedidos.class);
+        Call<String> postCarrinho = service.postCarrinho(token, userId, idAtributo, new IdItemKit(idItem));
+
+        postCarrinho.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if ( response.body() != null){
+                    Toast.makeText(getItemActivity.this, "Item adicionado ao carrinho", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getItemActivity.this, "Item já adicionado", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Toast.makeText(getItemActivity.this, "Fail", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

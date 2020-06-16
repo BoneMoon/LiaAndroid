@@ -52,4 +52,25 @@ public interface JsonPedidos {
             @Path("id")
                     Integer id
     );
+
+    @GET("carrinho")
+    Call<linhaCarrinho> getCarrinho(
+            @Header("Authorization")
+                    String token,
+            @Header("UserId")
+                    Integer id
+    );
+
+    @POST("carrinho/{id_atributos}")
+    Call<String> postCarrinho(
+            @Header("Authorization")
+                    String token,
+            @Header("UserId")
+                    Integer idUser,
+            @Path("id_atributos")
+                    Integer id_atributos,
+            @Body()
+                    IdItemKit id
+
+    );
 }

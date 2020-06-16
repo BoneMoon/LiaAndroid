@@ -15,6 +15,7 @@ import java.util.List;
 
 import adapter.CustomAdapter;
 import retrofit.Atributo;
+import retrofit.IdItemKit;
 import retrofit.Item;
 import retrofit.ItemAtributo;
 import retrofit.JsonPedidos;
@@ -33,6 +34,8 @@ public class getKitActivity extends AppCompatActivity {
     private TextView nItem;
 
     private Integer idK;
+    private Integer idAtributo;
+
     private String token;
 
     List<Item> itens;
@@ -51,6 +54,7 @@ public class getKitActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         idK = i.getIntExtra("idK", 0);
+        idAtributo = i.getIntExtra("id_atributos", 0);
 
         SharedPreferences preferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         token = preferences.getString("apitoken", "api");
@@ -85,7 +89,6 @@ public class getKitActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<KitId> call, Throwable t) {
-                Log.i("tag", t.toString());
                 Toast.makeText(getKitActivity.this, "Fail", Toast.LENGTH_SHORT).show();
             }
         });
@@ -94,5 +97,27 @@ public class getKitActivity extends AppCompatActivity {
     }
 
     public void btnCarrinho(View view) {
+        SharedPreferences preferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+        token = preferences.getString("apitoken", "api");
+        Integer userId = preferences.getInt("userid", 0);
+
+        JsonPedidos service = RetrofitClientInstance.getRetrofitInstance().create(JsonPedidos.class);
+        Call<String> postCarrinho = service.postCarrinho(token, userId, idAtributo, new IdItemKit(idK));
+
+        postCarrinho.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if ( response.body() != null){
+                    Toast.makeText(getKitActivity.this, "Kit adicionado ao carrinho", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getKitActivity.this, "Kit já adicionado", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Toast.makeText(getKitActivity.this, "Fail", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
