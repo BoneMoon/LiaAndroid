@@ -39,7 +39,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:divider="@color/white"
-            android:dividerHeight="10dp" />
+            android:dividerHeight="10dp"
+            android:longClickable="true"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,6 +60,7 @@
             android:layout_below="@+id/tituloKit"
             android:layout_marginTop="20dp"
             android:divider="@color/white"
-            android:dividerHeight="10dp" />
+            android:dividerHeight="10dp"
+            android:longClickable="true"/>
 
 </RelativeLayout>

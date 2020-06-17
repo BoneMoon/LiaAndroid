@@ -1,8 +1,10 @@
 package retrofit;
 
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -71,6 +73,18 @@ public interface JsonPedidos {
                     Integer id_atributos,
             @Body()
                     IdItemKit id
+    );
+
+    @DELETE("carrinho/{id}")
+    Call<ResponseBody> deleteCarrinho(
+            @Header("Authorization")
+                    String token,
+            @Header("UserId")
+                    Integer idUser,
+            @Header("IdAtributos")
+                    Integer idAtributos,
+            @Path("id")
+                    Integer id
 
     );
 }
