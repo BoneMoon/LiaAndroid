@@ -85,6 +85,5 @@ public interface JsonPedidos {
                     Integer idAtributos,
             @Path("id")
                     Integer id
-
     );
 }
