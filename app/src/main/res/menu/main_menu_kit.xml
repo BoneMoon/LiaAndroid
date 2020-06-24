@@ -10,10 +10,9 @@
         />
 
     <item
-        android:id="@+id/kits"
-        android:title="Kits"
-        app:showAsAction="never"
-        />
+        android:id="@+id/item"
+        android:title="Itens"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/carrinho"

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    tools:context=".ReservaActivity">
+
+
+    <TextView
+        android:id="@+id/t"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Reserva"
+        android:textColor="@color/colorPrimaryLight"
+        android:textSize="40dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtData1"
+        tools:text="XXXXXXXXXXX"
+        android:textColor="@color/colorPrimaryLight"
+        android:layout_below="@id/t"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="60dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/a"
+        android:text="a"
+        android:layout_toRightOf="@id/txtData1"
+        android:textColor="@color/colorPrimaryLight"
+        android:layout_below="@id/t"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        />
+
+    <TextView
+        android:id="@+id/txtData2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/t"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="11dp"
+        android:layout_toRightOf="@id/a"
+        android:inputType="date"
+        android:textColor="@color/colorPrimaryLight"
+        tools:text="XXXXXXXXXXX" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/motivo"
+        android:layout_below="@+id/txtData1"
+        android:layout_marginTop="30dp"
+        android:text="Motivo da Reserva"
+        android:textColor="@color/colorPrimaryLight"
+        android:textSize="20dp"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtMotivo"
+        android:layout_below="@+id/txtData1"
+        android:layout_toRightOf="@+id/motivo"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:hint="Introduzir motivo"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/curso"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/motivo"
+        android:text="Curso e Disciplina"
+        android:textColor="@color/colorPrimaryLight"
+        android:textSize="20dp"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCurso"
+        android:layout_below="@+id/txtMotivo"
+        android:layout_toRightOf="@+id/curso"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:hint="Introduzir curso"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn"
+        android:text="Reservar"
+        android:onClick="btnReserva"
+        android:layout_below="@id/txtCurso"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"/>
+
+    <ListView
+        android:id="@+id/listaItem"
+        android:layout_below="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:divider="@color/white"
+        android:dividerHeight="10dp"
+        android:longClickable="true"/>
+
+    <ListView
+        android:id="@+id/listaKit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/listaItem"
+        android:layout_marginTop="30dp"
+        android:divider="@color/white"
+        android:dividerHeight="10dp"
+        android:longClickable="true"/>
+</RelativeLayout>

@@ -86,4 +86,33 @@ public interface JsonPedidos {
             @Path("id")
                     Integer id
     );
+
+    @GET("reserva")
+    Call<linhaCarrinho> getReservaLinhas(
+            @Header("Authorization")
+                    String token,
+            @Header("UserId")
+                    Integer id
+    );
+
+    @POST("reserva")
+    Call<Reserva> postReserva(
+            @Header("Authorization")
+                    String token,
+            @Header("UserId")
+                    Integer id,
+            @Body
+                    Reserva reserva
+    );
+
+    @POST("search")
+    Call<linhaCarrinho> postSearch(
+            @Header("Authorization")
+                    String token,
+            @Header("UserId")
+                    Integer id,
+            @Body
+                    Search search
+    );
+
 }

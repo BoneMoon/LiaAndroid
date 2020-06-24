@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.Calendar;
+import java.util.List;
 
 import adapter.CustomAdapter;
 import adapter.CustomAdapterKit;
@@ -26,7 +27,9 @@ import retrofit.JsonPedidos;
 import retrofit.Kit;
 import retrofit.KitsAtributos;
 import retrofit.RetrofitClientInstance;
+import retrofit.Search;
 import retrofit.Users;
+import retrofit.linhaCarrinho;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,6 +42,11 @@ public class KitActivity extends AppCompatActivity {
     DatePickerDialog picker2;
     EditText data1;
     EditText data2;
+
+    List<Kit> linhaKit;
+
+    String data_inicio;
+    String data_fim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +97,12 @@ public class KitActivity extends AppCompatActivity {
             }
         });
 
+        SharedPreferences preferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+        String data_inicio = preferences.getString("data1", "");
+        String data_fim = preferences.getString("data2", "");
+
+        data1.setText(data_inicio);
+        data2.setText(data_fim);
 
     }
 
@@ -145,7 +159,7 @@ public class KitActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
+        inflater.inflate(R.menu.main_menu_kit, menu);
         return true;
     }
 
@@ -179,15 +193,16 @@ public class KitActivity extends AppCompatActivity {
             case R.id.item:
                 Intent intent = new Intent(KitActivity.this, ItemActivity.class);
                 startActivity(intent);
-
-            case R.id.kits:
                 return true;
 
             case R.id.carrinho:
                 Intent i = new Intent(KitActivity.this, CarrinhoActivity.class);
                 startActivity(i);
+                return true;
 
             case R.id.reserva:
+                Intent in = new Intent(KitActivity.this, ReservaActivity.class);
+                startActivity(in);
                 return true;
 
             default:
@@ -200,8 +215,32 @@ public class KitActivity extends AppCompatActivity {
             Toast.makeText(KitActivity.this, "As datas têm que estar preenchidas!", Toast.LENGTH_SHORT).show();
         } else if (data2.getText().toString().equals("")){
             Toast.makeText(KitActivity.this, "As datas têm que estar preenchidas!", Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(KitActivity.this, "Pesquisa com sucesso!", Toast.LENGTH_SHORT).show();
         }
+
+        SharedPreferences preferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+        String token = preferences.getString("apitoken", "");
+        Integer userId = preferences.getInt("userid", 0);
+        JsonPedidos service = RetrofitClientInstance.getRetrofitInstance().create(JsonPedidos.class);
+        Call<linhaCarrinho> searchCall = service.postSearch(token, userId, new Search(data1.getText().toString(), data2.getText().toString()));
+
+        searchCall.enqueue(new Callback<linhaCarrinho>() {
+            @Override
+            public void onResponse(Call<linhaCarrinho> call, Response<linhaCarrinho> response) {
+                if(response.body() != null){
+                    linhaKit = response.body().getKits();
+                    CustomAdapterKit kits_adapter = new CustomAdapterKit(getApplicationContext(), linhaKit);
+                    ((ListView) findViewById(R.id.listaKit)).setAdapter(kits_adapter);
+
+                    Toast.makeText(KitActivity.this, "Pesquisa com sucesso!", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(KitActivity.this, "Não há Kits!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<linhaCarrinho> call, Throwable t) {
+                Toast.makeText(KitActivity.this, "Fail!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
