@@ -193,10 +193,27 @@ public class ItemActivity extends AppCompatActivity {
                 return true;
 
             case R.id.reserva:
-                Intent in = new Intent(ItemActivity.this, ReservaActivity.class);
-                startActivity(in);
+                SharedPreferences preferencesGrupo = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+                Integer grupoId = preferencesGrupo.getInt("grupoid", 0);
+
+                if( grupoId == 2 || grupoId == 11){
+                    Toast.makeText(ItemActivity.this, "Não tem permissões para esta funcionalidade!", Toast.LENGTH_SHORT).show();
+                }else{
+                    Intent in = new Intent(ItemActivity.this, ReservaActivity.class);
+                    startActivity(in);
+                }
                 return true;
 
+            case R.id.minha_reserva:
+                SharedPreferences preferencesGrupoId = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+                Integer grupo = preferencesGrupoId.getInt("grupoid", 0);
+                if( grupo == 2 || grupo == 11){
+                    Toast.makeText(ItemActivity.this, "Não tem permissões para esta funcionalidade!", Toast.LENGTH_SHORT).show();
+                }else{
+                    Intent inte = new Intent(ItemActivity.this, MinhaReservaActivity.class);
+                    startActivity(inte);
+                }
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -204,6 +221,14 @@ public class ItemActivity extends AppCompatActivity {
     }
 
     public void btnPesquisa(View view) {
+
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("data1", data1.getText().toString());
+        Log.i("tag", data1.getText().toString());
+        editor.putString("data2", data2.getText().toString());
+        editor.apply();
+
         if (data1.getText().toString().equals("")){
             Toast.makeText(ItemActivity.this, "As datas têm que estar preenchidas!", Toast.LENGTH_SHORT).show();
         } else if (data2.getText().toString().equals("")){
@@ -226,12 +251,6 @@ public class ItemActivity extends AppCompatActivity {
                     ((ListView) findViewById(R.id.lista)).setAdapter(itens_adapter);
 
                     Toast.makeText(ItemActivity.this, "Pesquisa com sucesso!", Toast.LENGTH_SHORT).show();
-
-                    SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("data1", data1.getText().toString());
-                    editor.putString("data2", data2.getText().toString());
-                    editor.apply();
 
 
                 }else{

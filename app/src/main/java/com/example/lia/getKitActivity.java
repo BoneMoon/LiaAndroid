@@ -101,23 +101,33 @@ public class getKitActivity extends AppCompatActivity {
         token = preferences.getString("apitoken", "api");
         Integer userId = preferences.getInt("userid", 0);
 
-        JsonPedidos service = RetrofitClientInstance.getRetrofitInstance().create(JsonPedidos.class);
-        Call<String> postCarrinho = service.postCarrinho(token, userId, idAtributo, new IdItemKit(idK));
+        String data_inicio = preferences.getString("data1", "");
+        String data_fim = preferences.getString("data2", "");
 
-        postCarrinho.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if ( response.body() != null){
-                    Toast.makeText(getKitActivity.this, "Kit adicionado ao carrinho", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getKitActivity.this, "Kit já adicionado", Toast.LENGTH_SHORT).show();
+        if(data_inicio.equals("")){
+            Toast.makeText(getKitActivity.this, "Datas têm que ser preenchidas", Toast.LENGTH_SHORT).show();
+        } else if(data_fim.equals("")) {
+            Toast.makeText(getKitActivity.this, "Datas têm que ser preenchidas", Toast.LENGTH_SHORT).show();
+        }else{
+            JsonPedidos service = RetrofitClientInstance.getRetrofitInstance().create(JsonPedidos.class);
+            Call<String> postCarrinho = service.postCarrinho(token, userId, idAtributo, new IdItemKit(idK));
+
+            postCarrinho.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    if ( response.body() != null){
+                        Toast.makeText(getKitActivity.this, "Kit adicionado ao carrinho", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getKitActivity.this, "Kit já adicionado", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Toast.makeText(getKitActivity.this, "Fail", Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    Toast.makeText(getKitActivity.this, "Fail", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
     }
 }

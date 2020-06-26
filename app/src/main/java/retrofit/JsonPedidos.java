@@ -115,4 +115,12 @@ public interface JsonPedidos {
                     Search search
     );
 
+    @GET("reserva/{id}")
+    Call<MyReserva> getMinhaReserva(
+            @Header("Authorization")
+                    String token,
+            @Path("id")
+                Integer id
+    );
+
 }

@@ -71,7 +71,7 @@ public class KitActivity extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                data1.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                                data1.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
                             }
                         }, year, moth, day);
                 picker.show();
@@ -90,7 +90,7 @@ public class KitActivity extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                data2.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                                data2.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
                             }
                         }, year, moth, day);
                 picker2.show();
@@ -201,8 +201,26 @@ public class KitActivity extends AppCompatActivity {
                 return true;
 
             case R.id.reserva:
-                Intent in = new Intent(KitActivity.this, ReservaActivity.class);
-                startActivity(in);
+                SharedPreferences preferencesGrupo = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+                Integer grupoId = preferencesGrupo.getInt("grupoid", 0);
+
+                if( grupoId == 2 || grupoId == 11){
+                    Toast.makeText(KitActivity.this, "Não tem permissões para esta funcionalidade!", Toast.LENGTH_SHORT).show();
+                }else{
+                    Intent in = new Intent(KitActivity.this, ReservaActivity.class);
+                    startActivity(in);
+                }
+                return true;
+
+            case R.id.minha_reserva:
+                SharedPreferences preferencesGrupoId = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+                Integer grupo = preferencesGrupoId.getInt("grupoid", 0);
+                if( grupo == 2 || grupo == 11){
+                    Toast.makeText(KitActivity.this, "Não tem permissões para esta funcionalidade!", Toast.LENGTH_SHORT).show();
+                }else{
+                    Intent inte = new Intent(KitActivity.this, MinhaReservaActivity.class);
+                    startActivity(inte);
+                }
                 return true;
 
             default:

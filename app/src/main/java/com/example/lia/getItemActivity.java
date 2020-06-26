@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,23 +79,36 @@ public class getItemActivity extends AppCompatActivity {
         token = preferences.getString("apitoken", "api");
         Integer userId = preferences.getInt("userid", 0);
 
-        JsonPedidos service = RetrofitClientInstance.getRetrofitInstance().create(JsonPedidos.class);
-        Call<String> postCarrinho = service.postCarrinho(token, userId, idAtributo, new IdItemKit(idItem));
+        String data_inicio = preferences.getString("data1", "");
+        String data_fim = preferences.getString("data2", "");
 
-        postCarrinho.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if ( response.body() != null){
-                    Toast.makeText(getItemActivity.this, "Item adicionado ao carrinho", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getItemActivity.this, "Item já adicionado", Toast.LENGTH_SHORT).show();
+        Log.i("tag", data_inicio);
+
+        if(data_inicio.equals("")){
+            Toast.makeText(getItemActivity.this, "Datas têm que ser preenchidas", Toast.LENGTH_SHORT).show();
+        } else if(data_fim.equals("")){
+            Toast.makeText(getItemActivity.this, "Datas têm que ser preenchidas", Toast.LENGTH_SHORT).show();
+        }else{
+            JsonPedidos service = RetrofitClientInstance.getRetrofitInstance().create(JsonPedidos.class);
+            Call<String> postCarrinho = service.postCarrinho(token, userId, idAtributo, new IdItemKit(idItem));
+
+            postCarrinho.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    if ( response.body() != null){
+                        Toast.makeText(getItemActivity.this, "Item adicionado ao carrinho", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getItemActivity.this, "Item já adicionado", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Toast.makeText(getItemActivity.this, "Fail", Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    Toast.makeText(getItemActivity.this, "Fail", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+
     }
 }

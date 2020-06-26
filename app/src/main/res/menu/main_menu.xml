@@ -27,4 +27,10 @@
         app:showAsAction="never"
         />
 
+    <item
+        android:id="@+id/minha_reserva"
+        android:title="As Minhas Reservas"
+        app:showAsAction="never"
+        />
+
 </menu>
