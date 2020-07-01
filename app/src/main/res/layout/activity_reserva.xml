@@ -84,7 +84,7 @@
         android:id="@+id/curso"
         android:layout_marginTop="30dp"
         android:layout_below="@+id/motivo"
-        android:text="Curso e Disciplina"
+        android:text="Centro de Custos"
         android:textColor="@color/colorPrimaryLight"
         android:textSize="20dp"
         />
@@ -97,7 +97,7 @@
         android:layout_toRightOf="@+id/curso"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="20dp"
-        android:hint="Introduzir curso"/>
+        android:hint="Introduzir Centro de Custos"/>
 
     <Button
         android:layout_width="wrap_content"

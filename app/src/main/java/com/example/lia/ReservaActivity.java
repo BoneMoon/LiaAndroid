@@ -32,20 +32,58 @@ import retrofit2.Response;
 
 import static com.example.lia.MainActivity.SHARED_PREFS;
 
+/**
+ * Reserva activity
+ */
 public class ReservaActivity extends AppCompatActivity {
 
+    /**
+     * ListView Item
+     */
     ListView item;
+    /**
+     * ListView k
+     */
     ListView k;
 
+    /**
+     *  List<Item> linha
+     */
     List<Item> linha;
+    /**
+     * List<Kit> linhaKit
+     */
     List<Kit> linhaKit;
 
+    /**
+     * EditText motivo
+     */
     EditText motivo;
+    /**
+     * TextView data1
+     */
     TextView data1;
+    /**
+     * TextView data2
+     */
     TextView data2;
+    /**
+     * EditText curso
+     */
     EditText curso;
 
 
+    /**
+     * @param savedInstanceState
+     * Neste método vamos buscar os ids dos EditText e TextView
+     * correspondentes ao XML da atividade.
+     * Depois com o SharedPrefences vamos buscar as datas de inicio
+     * e fim que já estão definidas quando se pesquisa na atividade do Item
+     * ou do Kit e pomos nas TextView correspondentes desta atividade
+     *
+     * Por último chamados duas funções getItem() e getKit() que nos vão dar
+     * os items e os kits que o utlizador está a reservar
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +108,14 @@ public class ReservaActivity extends AppCompatActivity {
         getKit();
     }
 
+    /**
+     * Método getKit() -> método onde vamos receber o carrinho de compras
+     * Caso o utilizador mude de datas o carrinho é elminado.
+     *
+     * Tal como o carrinho este método usa a mesma coisa.
+     * A resposta que vamos receber vai ter duas lista uma de items e outra de kits
+     * Portanto aqui vamos buscar a lista dos kits e pomos no customAdapter correspondete
+     */
     private void getKit() {
         SharedPreferences preferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         String token = preferences.getString("apitoken", "");
@@ -97,6 +143,14 @@ public class ReservaActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método getKit() -> método onde vamos receber o carrinho de compras
+     * Caso o utilizador mude de datas o carrinho é elminado.
+     *
+     * Tal como o carrinho este método usa a mesma coisa.
+     * A resposta que vamos receber vai ter duas lista uma de items e outra de kits
+     * Portanto aqui vamos buscar a lista dos items e pomos no customAdapter correspondete
+     */
     private void getItem() {
         SharedPreferences preferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         String token = preferences.getString("apitoken", "");
@@ -124,6 +178,19 @@ public class ReservaActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Btn reserva
+     * É com este método que vamos fazer a reserva
+     *
+     * Para isso começamos por ir buscar ao SharedPreferences a apitoken e o userId
+     * Depois vamos verificar se as datas estão preenchidas
+     * De seguida criamos uma nova reserva com os valores que o utilizador pôs
+     * na atividade
+     * Por último se a reserva foi feita com sucesso aparece um Toast e o utilizador é
+     * reencaminhado para outra atividade
+     *
+     * @param view the view
+     */
     public void btnReserva(View view) {
         SharedPreferences preferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         String token = preferences.getString("apitoken", "");
@@ -131,9 +198,12 @@ public class ReservaActivity extends AppCompatActivity {
 
         JsonPedidos service = RetrofitClientInstance.getRetrofitInstance().create(JsonPedidos.class);
 
-        //Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(dataInicio);
-        //Date date2=new SimpleDateFormat("yyyy-MM-dd").parse(dataFim);
-        //Log.i("tag", date1.);
+        if(data1.getText().toString().equals("")){
+            Toast.makeText(ReservaActivity.this, "As datas têm que estar preenchidas!", Toast.LENGTH_SHORT).show();
+        }else if (data2.getText().toString().equals("")){
+            Toast.makeText(ReservaActivity.this, "As datas têm que estar preenchidas!", Toast.LENGTH_SHORT).show();
+        }
+
         Reserva reserva = new Reserva(motivo.getText().toString(), data1.getText().toString(), data2.getText().toString(), curso.getText().toString());
         Call<Reserva> reservaCall = service.postReserva(token, userId, reserva);
 
@@ -148,7 +218,6 @@ public class ReservaActivity extends AppCompatActivity {
                     Toast.makeText(ReservaActivity.this, "Tem que preencher todos os campos.", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onFailure(Call<Reserva> call, Throwable t) {
                 Toast.makeText(ReservaActivity.this, "Fail!", Toast.LENGTH_SHORT).show();

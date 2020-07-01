@@ -39,17 +39,45 @@ import retrofit2.Response;
 
 import static com.example.lia.MainActivity.SHARED_PREFS;
 
+/**
+ * Item activity
+ */
 public class ItemActivity extends AppCompatActivity {
+    /**
+     * ItemAtributo Itens
+     */
     ItemAtributo itens;
+    /**
+     * DatePickerDialog picker1
+     */
     DatePickerDialog picker;
+    /**
+     * DatePickerDialog picker2
+     */
     DatePickerDialog picker2;
+    /**
+     * EditText data1
+     */
     EditText data1;
+    /**
+     * EditText data2
+     */
     EditText data2;
 
+    /**
+     * List linhaItem of items
+     */
     List<Item> linhaItem;
 
-
-
+    /**
+     * @param savedInstanceState
+     * Este método é chamado assim que a atividade começa,
+     * por isso mesmo é aqui que chamamos ambos os métodos
+     * getItem() e getItemID()
+     *
+     * Além disso é aqui onde eu faço que quando carrega no EditText para pôr
+     * as datas aparece um calendário para escolher as datas
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +128,12 @@ public class ItemActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método Get item -> método onde recebo todos os itens
+     * Para começar vou buscar ao SharedPreferences o token e o userId
+     * Logo depois a resposta vai ser um ItemAtributo que é uma List<Item>
+     * Por isso depois é só pôr a resposta no CustomAdapter
+     */
     public void getItem(){
         SharedPreferences preferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         String token = preferences.getString("apitoken", "");
@@ -126,6 +160,15 @@ public class ItemActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método Get item id -> método que serve para quando carregarmos num item qualquer
+     * irmos para outra atividade onde vamos ver os detalhes do item seleionado
+     *
+     * Para isso a primeira coisa a fazer é por um setOnItemClickListener() na lista
+     * De seguida para o item naquela posição vamos guardar o valor no nome, id e o
+     * id atributo
+     * Depois seguimos para outra atividade
+     */
     public void getItemID(){
         final ListView item = findViewById(R.id.lista);
 
@@ -148,6 +191,11 @@ public class ItemActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * @param menu
+     * Escolher o menu que vai aparecer
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -155,6 +203,25 @@ public class ItemActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * @param item
+     * Escolher das diferentes opções do menu e o que acontece quando lá carregamos
+     *
+     * Primeiramente fazemos um switch() e depois case() onde vamos ver caso ele carregue
+     * no menu que tem o id o que acontece
+     *
+     * no Logout:
+     * O utilizador volta à atividade do inicio que neste caso é onde se encontra o login
+     *
+     * no Kits e carrinho:
+     * Quando carrega nalgum destes o utilizador vai para outra atividade
+     *
+     * na Reserva e minha_reserva:
+     * Antes de puder it para alguma das atividades vamos verificar o seu
+     * grupoId pois caso ele esteja no grupo default o utilizador não pode
+     * reserva e como não pode reservar também não tem reservas
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
@@ -220,15 +287,22 @@ public class ItemActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Btn pesquisa-> fazer pesquisa por datas
+     *
+     * Para fazer a pesquisa ambas as datas têm que estar preenchida, logo
+     * se não tiveram vai aparecer um Toast
+     *
+     * Como no carrinho esta resposta também returna duas lista, items e kits.
+     * Para só ser os itens vamos à resposta e getItems()
+     *
+     * Depois quando estiverem as datas vamos fazer um update à lista dos items, onde
+     * vão só aprecer os itens que estão disponíveis para reserva entre as datas que
+     * o utilizador pôs
+     *
+     * @param view the view
+     */
     public void btnPesquisa(View view) {
-
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("data1", data1.getText().toString());
-        Log.i("tag", data1.getText().toString());
-        editor.putString("data2", data2.getText().toString());
-        editor.apply();
-
         if (data1.getText().toString().equals("")){
             Toast.makeText(ItemActivity.this, "As datas têm que estar preenchidas!", Toast.LENGTH_SHORT).show();
         } else if (data2.getText().toString().equals("")){
@@ -241,18 +315,21 @@ public class ItemActivity extends AppCompatActivity {
         JsonPedidos service = RetrofitClientInstance.getRetrofitInstance().create(JsonPedidos.class);
         Call<linhaCarrinho> searchCall = service.postSearch(token, userId, new Search(data1.getText().toString(), data2.getText().toString()));
 
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("data1", data1.getText().toString());
+        Log.i("tag", data1.getText().toString());
+        editor.putString("data2", data2.getText().toString());
+        editor.apply();
+
         searchCall.enqueue(new Callback<linhaCarrinho>() {
             @Override
             public void onResponse(Call<linhaCarrinho> call, Response<linhaCarrinho> response) {
                 if(response.body() != null){
-
                     linhaItem = response.body().getItens();
                     CustomAdapter itens_adapter = new CustomAdapter(getApplicationContext(), linhaItem);
                     ((ListView) findViewById(R.id.lista)).setAdapter(itens_adapter);
-
                     Toast.makeText(ItemActivity.this, "Pesquisa com sucesso!", Toast.LENGTH_SHORT).show();
-
-
                 }else{
                     Toast.makeText(ItemActivity.this, "Não há itens!", Toast.LENGTH_SHORT).show();
                 }
@@ -263,17 +340,5 @@ public class ItemActivity extends AppCompatActivity {
                 Toast.makeText(ItemActivity.this, "Fail!", Toast.LENGTH_SHORT).show();
             }
         });
-        /*itens = response.body();
-        Toast.makeText(ItemActivity.this, "Pesquisa com sucesso!", Toast.LENGTH_SHORT).show();
-        CustomAdapter itens_adapter = new CustomAdapter(getApplicationContext(), itens.getItensatributos());
-        ((ListView) findViewById(R.id.lista)).setAdapter(itens_adapter);
-
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("data1", data1.getText().toString());
-        editor.putString("data2", data2.getText().toString());
-        editor.apply();*/
-
-
     }
 }

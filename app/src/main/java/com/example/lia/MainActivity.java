@@ -17,9 +17,21 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Main activity
+ */
 public class MainActivity extends AppCompatActivity {
+    /**
+     * SHARED_PREFS
+     */
     public static final String SHARED_PREFS = "token";
+    /**
+     * EditText Email
+     */
     EditText email;
+    /**
+     * EditText Password
+     */
     EditText password;
 
     @Override
@@ -31,6 +43,15 @@ public class MainActivity extends AppCompatActivity {
         password = findViewById(R.id.editPass);
     }
 
+    /**
+     * Btn login.
+     * Este método serve para fazer login
+     *
+     * Para isso começamos por criar um novo utilizador com o email e a password
+     * que o utilizador põe na atividade
+     *
+     * @param view the view
+     */
     public void btnLogin(View view) {
         JsonPedidos service = RetrofitClientInstance.getRetrofitInstance().create(JsonPedidos.class);
         Users user = new Users(email.getText().toString(), password.getText().toString());

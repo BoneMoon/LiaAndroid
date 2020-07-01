@@ -20,6 +20,9 @@ import retrofit2.Response;
 
 import static com.example.lia.MainActivity.SHARED_PREFS;
 
+/**
+ * Get item activity
+ */
 public class getItemActivity extends AppCompatActivity {
 
     private TextView nome;
@@ -31,6 +34,16 @@ public class getItemActivity extends AppCompatActivity {
     private Integer idAtributo;
     private String token;
 
+    /**
+     * @param savedInstanceState
+     * Neste método vamos começar por ir buscar ao XML aos ids correspondentes
+     * a cada TextView
+     * Logo depois com a ajuda do putExtra() vamos buscar o idItem e o idAtributo
+     * à atividade do Item
+     * De seguida na resposta vamos buscar o queremos que esteja na atividade
+     * neste caso vamos buscar a marca, modelo e descrição do item e associar cada
+     * um deles a um TextView da atividade
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +87,13 @@ public class getItemActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Btn carrinho
+     * Este método serve para o utilizador adicionar o item ao carrinho
+     * Para isso começamos ir buscar as datas e verificar se estão preenchidas
+     * E depois quando a resposta for positiva quer dizer que o item foi adicionado
+     * @param view the view
+     */
     public void btnCarrinho(View view) {
         SharedPreferences preferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         token = preferences.getString("apitoken", "api");
@@ -81,8 +101,6 @@ public class getItemActivity extends AppCompatActivity {
 
         String data_inicio = preferences.getString("data1", "");
         String data_fim = preferences.getString("data2", "");
-
-        Log.i("tag", data_inicio);
 
         if(data_inicio.equals("")){
             Toast.makeText(getItemActivity.this, "Datas têm que ser preenchidas", Toast.LENGTH_SHORT).show();

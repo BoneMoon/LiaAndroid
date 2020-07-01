@@ -27,6 +27,9 @@ import retrofit2.Response;
 
 import static com.example.lia.MainActivity.SHARED_PREFS;
 
+/**
+ * Get kit activity
+ */
 public class getKitActivity extends AppCompatActivity {
 
     private TextView nameKit;
@@ -38,11 +41,23 @@ public class getKitActivity extends AppCompatActivity {
 
     private String token;
 
+    /**
+     * List<Item> itens
+     */
     List<Item> itens;
 
     private String item;
 
 
+    /**
+     * @param savedInstanceState
+     * Neste método vamos começar por ir buscar ao XML aos ids correspondentes
+     * a cada TextView
+     * Logo depois com a ajuda do putExtra() vamos buscar o idItem e o idAtributo
+     * à atividade do Item
+     * De seguida na resposta vamos buscar o queremos à resposta que neste caso é a descrição
+     * e vamos támbém buscar a lista dos items que esta associado a esse kit
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,8 +95,6 @@ public class getKitActivity extends AppCompatActivity {
                                 nItem.setText(item);
                             }
                     }
-
-
                 }else {
                     Toast.makeText(getKitActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                 }
@@ -96,6 +109,13 @@ public class getKitActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Btn carrinho.
+     * Este método serve para o utilizador adicionar o item ao carrinho
+     * Para isso começamos ir buscar as datas e verificar se estão preenchidas
+     * E depois quando a resposta for positiva quer dizer que o kit foi adicionado
+     * @param view the view
+     */
     public void btnCarrinho(View view) {
         SharedPreferences preferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         token = preferences.getString("apitoken", "api");

@@ -21,10 +21,21 @@ import retrofit2.Response;
 
 import static com.example.lia.MainActivity.SHARED_PREFS;
 
+/**
+ * Minha reserva activity
+ */
 public class MinhaReservaActivity extends AppCompatActivity {
-    List<Reserva> reservas;
+    /**
+     * MyReserva myReserva
+     */
     MyReserva myReserva;
 
+    /**
+     * @param savedInstanceState
+     * No início desta atividade vamos chamar a função getReservas()
+     * que nos vai returnar as reservas feitas por o utilizador
+     * que esta logado
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +44,13 @@ public class MinhaReservaActivity extends AppCompatActivity {
         getReservas();
     }
 
+    /**
+     * Método getReservas() -> receber as reservas feitas pelo utilizador
+     * Para isso começamos por ir buscar o token e o userId com o SharedPreferences
+     * Depois caso a resposta for feita com sucesso associamos a resposta ao tipo de returno que
+     * dá e de seguida associamos ao customAdapter correspondente
+     *
+     */
     private void getReservas() {
         SharedPreferences preferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         String token = preferences.getString("apitoken", "");

@@ -36,18 +36,50 @@ import retrofit2.Response;
 
 import static com.example.lia.MainActivity.SHARED_PREFS;
 
+/**
+ * Kit activity
+ */
 public class KitActivity extends AppCompatActivity {
+    /**
+     * KitsAtributos Kits
+     */
     KitsAtributos kits;
+    /**
+     * DatePickerDialog picker
+     */
     DatePickerDialog picker;
+    /**
+     * DatePickerDialog picker2
+     */
     DatePickerDialog picker2;
+    /**
+     * EditText data1
+     */
     EditText data1;
+    /**
+     * EditText data2
+     */
     EditText data2;
 
+    /**
+     * List linhaKit of Kit
+     */
     List<Kit> linhaKit;
 
-    String data_inicio;
-    String data_fim;
 
+
+    /**
+     * @param savedInstanceState
+     * Este método é chamado assim que a atividade começa,
+     * por isso mesmo é aqui que chamamos ambos os métodos
+     * geKit() e getKitId()
+     *
+     * Além disso é aqui onde eu faço que quando carrega no EditText para pôr
+     * as datas aparece um calendário para escolher as datas.
+     *
+     * E ainda vamos buscar as datas da atividade do Item usando o SharedPreferences
+     * e caso esteja preenchidas vão aparecer nesta atividade
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +138,12 @@ public class KitActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Método Get kit->  método onde recebo todos os kits
+     * Para começar vou buscar ao SharedPreferences o token e o userId
+     * Logo depois a resposta vai ser um KitAtricuto que é uma List<Kit>
+     * Por isso depois é só pôr a resposta no CustomAdapter
+     */
     public void getKit(){
         SharedPreferences preferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         String token = preferences.getString("apitoken", "");
@@ -133,6 +171,15 @@ public class KitActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Métod Get kit id -> método que serve para quando carregarmos num kit qualquer
+     * irmos para outra atividade onde vamos ver os detalhes do kit seleionado
+     *
+     * Para isso a primeira coisa a fazer é por um setOnItemClickListener() na lista
+     * De seguida para o kit naquela posição vamos guardar o valor no nome, id e o
+     * id atributo
+     * Depois seguimos para outra atividade
+     */
     public void getKitId(){
         final ListView kit = findViewById(R.id.listaKit);
 
@@ -156,6 +203,11 @@ public class KitActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * @param menu
+     * Escolher o menu que vai aparecer, escolhendo o layout
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -163,6 +215,25 @@ public class KitActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * @param item
+     * Escolher das diferentes opções do menu e o que acontece quando lá carregamos
+     *
+     * Primeiramente fazemos um switch() e depois case() onde vamos ver caso ele carregue
+     * no menu que tem o id o que acontece
+     *      *
+     * no Logout:
+     * O utilizador volta à atividade do inicio que neste caso é onde se encontra o login
+     *
+     * no Item e carrinho:
+     * Quando carrega nalgum destes o utilizador vai para outra atividade
+     *
+     * na Reserva e minha_reserva:
+     * Antes de puder ir para alguma das atividades vamos verificar o seu
+     * grupoId pois caso ele esteja no grupo default o utilizador não pode
+     * reserva e como não pode reservar também não tem reservas
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
@@ -228,6 +299,23 @@ public class KitActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Btn pesquisa-> fazer pesquisa por datas
+     *
+     * Para fazer a pesquisa ambas as datas têm que estar preenchida, logo
+     * se não tiveram vai aparecer um Toast
+     *
+     * No método onCreate() vamos buscar as datas que estão na atividade do item
+     *
+     * Como no carrinho esta resposta também returna duas lista, items e kits.
+     * Para só ser os itens vamos à resposta e getItems()
+     *
+     * Depois quando estiverem as datas vamos fazer um update à lista dos items, onde
+     * vão só aprecer os itens que estão disponíveis para reserva entre as datas que
+     * o utilizador pôs
+     *
+     * @param view the view
+     */
     public void btnPesquisa(View view) {
         if (data1.getText().toString().equals("")){
             Toast.makeText(KitActivity.this, "As datas têm que estar preenchidas!", Toast.LENGTH_SHORT).show();

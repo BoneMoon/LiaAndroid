@@ -33,21 +33,54 @@ import retrofit2.Response;
 
 import static com.example.lia.MainActivity.SHARED_PREFS;
 
+/**
+ * Carrinho activity
+ */
 public class CarrinhoActivity extends AppCompatActivity {
+    /**
+     * ItemAtributo Itens
+     */
     ItemAtributo itens;
+    /**
+     * KitsAtributos Kits
+     */
     KitsAtributos kits;
 
+    /**
+     * List of itens linha
+     */
     List<Item> linha;
+
+    /**
+     * List of kits linhaKit
+     */
     List<Kit> linhaKit;
 
+    /**
+     * ListView item
+     */
     ListView item;
+
+    /**
+     * ListView k
+     */
     ListView k;
 
+    /**
+     * String token
+     */
     String token;
+
     private Integer idK;
     private Integer idAtributo;
     private Integer idItem;
 
+    /**
+     * @param savedInstanceState
+     * Este método é chamado assim que a atividade começa,
+     * por isso mesmo é aqui que chamamos ambos os métodos
+     * getItem() e getKit()
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,12 +89,21 @@ public class CarrinhoActivity extends AppCompatActivity {
         item = findViewById(R.id.listaItem);
         k = findViewById(R.id.listaKit);
 
-
-
         getItem();
         getKit();
     }
 
+    /**
+     * Método para receber os kits
+     * Como estou a receber linhaCarrinho que é duas listas uma de items e outra de kits
+     * Em primeiro vou buscar o token e o userId ao SharedPreference
+     * De seguida como estou a receber duas listas em primeiro vou receber a lista dos kits,
+     * para isso vou à resposta e vou buscar os kits
+     * Depois ponho a lista dos kits no customAdapter
+     *
+     * Por último chamo o método deleteKit() para que a lista esteja atualizada conforme
+     * o número de kits
+     */
     private void getKit() {
         SharedPreferences preferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         String token = preferences.getString("apitoken", "");
@@ -90,6 +132,17 @@ public class CarrinhoActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método para receber os items
+     * Como estou a receber linhaCarrinho que é duas listas uma de items e outra de kits
+     * Em primeiro vou buscar o token e o userId ao SharedPreference
+     * De seguida como estou a receber duas listas mas quero receber os items,
+     * para isso vou à resposta e vou buscar os items
+     * Depois ponho a lista dos items no customAdapter
+     *
+     * Por último chamo o método deleteKit() para que a lista esteja atualizada conforme
+     * o número de kits
+     */
     private void getItem() {
         SharedPreferences preferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         String token = preferences.getString("apitoken", "");
@@ -118,6 +171,14 @@ public class CarrinhoActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método para apagar item
+     * Para apagarmos o item vamos ter que carrega no item que queremos apagar
+     * Para isso em primeiro lugar pomos um setOnItemClickListener() na lista
+     * Logo depois vamos buscar novamente ao SharedPreferences o token e o userId
+     * De seguida vamos buscar o idAtributo e o idItem corresponde à posição da lista
+     * Caso a resposta seja positiva aparece um Toast e vamos fazer o start da atividade para atualizar a lista
+     */
     public void deleteItem(){
         item.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -151,6 +212,14 @@ public class CarrinhoActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método para apagar kit
+     * Para apagarmos o item vamos ter que carrega no item que queremos apagar
+     * Para isso em primeiro lugar pomos um setOnItemClickListener() na lista
+     * Logo depois vamos buscar novamente ao SharedPreferences o token e o userId
+     * De seguida vamos buscar o idAtributo e o idItem corresponde à posição da lista
+     * Caso a resposta seja positiva aparece um Toast e vamos fazer o start da atividade para atualizar a lista
+     */
     public void deleteKit(){
         k.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
