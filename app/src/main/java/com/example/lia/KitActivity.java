@@ -103,7 +103,7 @@ public class KitActivity extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                data1.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
+                                data1.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
                             }
                         }, year, moth, day);
                 picker.show();
@@ -122,7 +122,7 @@ public class KitActivity extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                data2.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
+                                data2.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
                             }
                         }, year, moth, day);
                 picker2.show();
@@ -135,7 +135,6 @@ public class KitActivity extends AppCompatActivity {
 
         data1.setText(data_inicio);
         data2.setText(data_fim);
-
     }
 
     /**
