@@ -337,6 +337,7 @@ public class ItemActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<linhaCarrinho> call, Throwable t) {
+                Log.i("tag", t.toString());
                 Toast.makeText(ItemActivity.this, "Fail!", Toast.LENGTH_SHORT).show();
             }
         });

@@ -6,6 +6,8 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -66,7 +68,9 @@ public class KitActivity extends AppCompatActivity {
      */
     List<Kit> linhaKit;
 
+    ListView a;
 
+    String value;
 
     /**
      * @param savedInstanceState
@@ -90,6 +94,7 @@ public class KitActivity extends AppCompatActivity {
 
         data1 = findViewById(R.id.dataPicker1);
         data2 = findViewById(R.id.dataPicker2);
+        //a = findViewById(R.id.listaKit);
 
         data1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +140,28 @@ public class KitActivity extends AppCompatActivity {
 
         data1.setText(data_inicio);
         data2.setText(data_fim);
+
+        //checkDates();
     }
+
+    /*private void checkDates() {
+        data1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                value = data1.getText().toString();
+                //a.setAdapter(null);
+                //a.invalidate();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+    }*/
 
     /**
      * Método Get kit->  método onde recebo todos os kits
@@ -344,6 +370,7 @@ public class KitActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<linhaCarrinho> call, Throwable t) {
+                Log.i("tag", t.toString());
                 Toast.makeText(KitActivity.this, "Fail!", Toast.LENGTH_SHORT).show();
             }
         });
