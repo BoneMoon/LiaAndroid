@@ -140,11 +140,9 @@ public class KitActivity extends AppCompatActivity {
 
         data1.setText(data_inicio);
         data2.setText(data_fim);
-
-        //checkDates();
     }
 
-    /*private void checkDates() {
+    private void checkDates() {
         data1.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -153,15 +151,29 @@ public class KitActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 value = data1.getText().toString();
-                //a.setAdapter(null);
-                //a.invalidate();
+                kits.getKitsatributos().clear();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
             }
         });
-    }*/
+
+        data2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                kits.getKitsatributos().clear();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+    }
 
     /**
      * Método Get kit->  método onde recebo todos os kits
@@ -184,6 +196,8 @@ public class KitActivity extends AppCompatActivity {
                     kits = response.body();
                     CustomAdapterKit kits_adapter = new CustomAdapterKit(getApplicationContext(), kits.getKitsatributos());
                     ((ListView) findViewById(R.id.listaKit)).setAdapter(kits_adapter);
+
+                    checkDates();
                 }else{
                     Toast.makeText(KitActivity.this, "Não há kits!", Toast.LENGTH_SHORT).show();
                 }
@@ -361,6 +375,14 @@ public class KitActivity extends AppCompatActivity {
                     linhaKit = response.body().getKits();
                     CustomAdapterKit kits_adapter = new CustomAdapterKit(getApplicationContext(), linhaKit);
                     ((ListView) findViewById(R.id.listaKit)).setAdapter(kits_adapter);
+
+                    /*SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("data1K", data1.getText().toString());
+                    editor.putString("data2K", data2.getText().toString());
+                    editor.apply();*/
+
+                    checkDates();
 
                     Toast.makeText(KitActivity.this, "Pesquisa com sucesso!", Toast.LENGTH_SHORT).show();
                 }else{

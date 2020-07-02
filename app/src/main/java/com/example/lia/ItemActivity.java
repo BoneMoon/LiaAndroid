@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -126,6 +128,46 @@ public class ItemActivity extends AppCompatActivity {
                 picker2.show();
             }
         });
+
+        /*SharedPreferences preferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+        String data_inicio = preferences.getString("data1K", "");
+        String data_fim = preferences.getString("data2K", "");
+
+        data1.setText(data_inicio);
+        data2.setText(data_fim);*/
+    }
+
+    private void checkDates() {
+        data1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String value = data1.getText().toString();
+                itens.getItensatributos().clear();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        data2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                itens.getItensatributos().clear();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
     /**
@@ -148,6 +190,7 @@ public class ItemActivity extends AppCompatActivity {
                     itens = response.body();
                     CustomAdapter itens_adapter = new CustomAdapter(getApplicationContext(), itens.getItensatributos());
                     ((ListView) findViewById(R.id.lista)).setAdapter(itens_adapter);
+                    checkDates();
                 }else{
                     Toast.makeText(ItemActivity.this, "Não há itens!", Toast.LENGTH_SHORT).show();
                 }
@@ -318,7 +361,6 @@ public class ItemActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("data1", data1.getText().toString());
-        Log.i("tag", data1.getText().toString());
         editor.putString("data2", data2.getText().toString());
         editor.apply();
 
@@ -330,6 +372,7 @@ public class ItemActivity extends AppCompatActivity {
                     CustomAdapter itens_adapter = new CustomAdapter(getApplicationContext(), linhaItem);
                     ((ListView) findViewById(R.id.lista)).setAdapter(itens_adapter);
                     Toast.makeText(ItemActivity.this, "Pesquisa com sucesso!", Toast.LENGTH_SHORT).show();
+                    checkDates();
                 }else{
                     Toast.makeText(ItemActivity.this, "Não há itens!", Toast.LENGTH_SHORT).show();
                 }
