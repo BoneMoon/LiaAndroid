@@ -17,7 +17,7 @@
         android:id="@+id/titulo"
         android:layout_centerHorizontal="true"
         android:text="KITS"
-        android:textSize="50dp"
+        android:textSize="40dp"
         android:textColor="@color/colorPrimaryLight"
         />
 
@@ -79,18 +79,36 @@
         android:id="@+id/pesquisa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pesquisar"
+        android:text="Pesquisar por Datas"
         android:onClick="btnPesquisa"
         android:layout_below="@id/dataPicker2"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="pesquisa por nome"
+        android:layout_marginTop="20dp"
+        android:id="@+id/pesquisaNome"
+        android:layout_below="@+id/pesquisa"/>
+
+    <Button
+        android:id="@+id/pesquisaName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pesquisar por Nome"
+        android:layout_below="@id/pesquisa"
+        android:onClick="btnPesquisaNome"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/pesquisaNome" />
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listaKit"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/pesquisa"
+        android:layout_below="@+id/pesquisaNome"
         android:dividerHeight="20dp"
         android:divider="@color/white"
         />

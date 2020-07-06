@@ -7,8 +7,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import retrofit.Atributo;
 import retrofit.IdItemKit;
@@ -34,6 +37,8 @@ public class getItemActivity extends AppCompatActivity {
     private Integer idAtributo;
     private String token;
 
+    ImageView image;
+
     /**
      * @param savedInstanceState
      * Neste método vamos começar por ir buscar ao XML aos ids correspondentes
@@ -53,6 +58,7 @@ public class getItemActivity extends AppCompatActivity {
         marca = findViewById(R.id.marca);
         modelo = findViewById(R.id.modelo);
         descricao = findViewById(R.id.descricao);
+        image = findViewById(R.id.image);
 
         Intent i = getIntent();
         idItem = i.getIntExtra("idItem", 0);
@@ -73,7 +79,7 @@ public class getItemActivity extends AppCompatActivity {
                     marca.setText(response.body().getMarca());
                     modelo.setText(response.body().getModelo());
                     descricao.setText(response.body().getDescricao());
-
+                    Glide.with(getItemActivity.this).load("https://liaandroid.herokuapp.com/" + response.body().getFotogradia_caminho()).into(image);
                 }else {
                     Toast.makeText(getItemActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
                 }

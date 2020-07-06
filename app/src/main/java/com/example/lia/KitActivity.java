@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -68,9 +69,8 @@ public class KitActivity extends AppCompatActivity {
      */
     List<Kit> linhaKit;
 
-    ListView a;
+    EditText pesquisaNome;
 
-    String value;
 
     /**
      * @param savedInstanceState
@@ -94,7 +94,7 @@ public class KitActivity extends AppCompatActivity {
 
         data1 = findViewById(R.id.dataPicker1);
         data2 = findViewById(R.id.dataPicker2);
-        //a = findViewById(R.id.listaKit);
+        pesquisaNome = findViewById(R.id.pesquisaNome);
 
         data1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,7 +150,7 @@ public class KitActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                value = data1.getText().toString();
+                String value = data1.getText().toString();
                 kits.getKitsatributos().clear();
             }
 
@@ -375,13 +375,6 @@ public class KitActivity extends AppCompatActivity {
                     linhaKit = response.body().getKits();
                     CustomAdapterKit kits_adapter = new CustomAdapterKit(getApplicationContext(), linhaKit);
                     ((ListView) findViewById(R.id.listaKit)).setAdapter(kits_adapter);
-
-                    /*SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("data1K", data1.getText().toString());
-                    editor.putString("data2K", data2.getText().toString());
-                    editor.apply();*/
-
                     checkDates();
 
                     Toast.makeText(KitActivity.this, "Pesquisa com sucesso!", Toast.LENGTH_SHORT).show();
@@ -392,9 +385,22 @@ public class KitActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<linhaCarrinho> call, Throwable t) {
-                Log.i("tag", t.toString());
                 Toast.makeText(KitActivity.this, "Fail!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void btnPesquisaNome(View view) {
+        String nome = pesquisaNome.getText().toString();
+        List<Kit> kit;
+        kit = new ArrayList<>();
+
+        for (int i = 0; i < linhaKit.size(); i++){
+            if(linhaKit.get(i).getName().toLowerCase().contains(nome.toLowerCase())){
+                kit.add(linhaKit.get(i));
+            }
+        }
+        CustomAdapterKit kits_adapter = new CustomAdapterKit(getApplicationContext(), kit);
+        ((ListView) findViewById(R.id.listaKit)).setAdapter(kits_adapter);
     }
 }

@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -71,6 +72,8 @@ public class ItemActivity extends AppCompatActivity {
      */
     List<Item> linhaItem;
 
+    EditText pesquisaNome;
+
     /**
      * @param savedInstanceState
      * Este método é chamado assim que a atividade começa,
@@ -89,6 +92,7 @@ public class ItemActivity extends AppCompatActivity {
 
         data1 = findViewById(R.id.dataPicker1);
         data2 = findViewById(R.id.dataPicker2);
+        pesquisaNome = findViewById(R.id.pesquisaNome);
 
 
         data1.setOnClickListener(new View.OnClickListener() {
@@ -128,13 +132,6 @@ public class ItemActivity extends AppCompatActivity {
                 picker2.show();
             }
         });
-
-        /*SharedPreferences preferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-        String data_inicio = preferences.getString("data1K", "");
-        String data_fim = preferences.getString("data2K", "");
-
-        data1.setText(data_inicio);
-        data2.setText(data_fim);*/
     }
 
     private void checkDates() {
@@ -202,6 +199,7 @@ public class ItemActivity extends AppCompatActivity {
             }
         });
     }
+
 
     /**
      * Método Get item id -> método que serve para quando carregarmos num item qualquer
@@ -380,9 +378,22 @@ public class ItemActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<linhaCarrinho> call, Throwable t) {
-                Log.i("tag", t.toString());
                 Toast.makeText(ItemActivity.this, "Fail!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void btnPesquisaNome(View view) {
+        String nome = pesquisaNome.getText().toString();
+        List<Item> item;
+        item = new ArrayList<>();
+
+        for (int i = 0; i < linhaItem.size(); i++){
+            if(linhaItem.get(i).getName().toLowerCase().contains(nome.toLowerCase())){
+                item.add(linhaItem.get(i));
+            }
+        }
+        CustomAdapter itens_adapter = new CustomAdapter(getApplicationContext(), item);
+        ((ListView) findViewById(R.id.lista)).setAdapter(itens_adapter);
     }
 }
