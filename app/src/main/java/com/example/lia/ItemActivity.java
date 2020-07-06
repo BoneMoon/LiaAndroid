@@ -387,7 +387,7 @@ public class ItemActivity extends AppCompatActivity {
         String nome = pesquisaNome.getText().toString();
         List<Item> item;
         item = new ArrayList<>();
-        
+
         for (int i = 0; i < linhaItem.size(); i++){
             if(linhaItem.get(i).getName().toLowerCase().contains(nome.toLowerCase())){
                 item.add(linhaItem.get(i));
