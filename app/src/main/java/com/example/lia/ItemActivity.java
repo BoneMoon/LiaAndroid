@@ -72,6 +72,9 @@ public class ItemActivity extends AppCompatActivity {
      */
     List<Item> linhaItem;
 
+    /**
+     * EditText pesquisaNome
+     */
     EditText pesquisaNome;
 
     /**
@@ -134,6 +137,15 @@ public class ItemActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método checkDates -> método onde verifico se o texto das datas é modificado
+     *
+     * Para isso uso o TextWatcher() e quando o utilizador estiver a mudar
+     * alguma das datas a lista dos itens é apagada.
+     *
+     * Chamo este métdo onde vou buscar a listas dos itens todos e ainda
+     * quando chamo a lista da pesquisa
+     */
     private void checkDates() {
         data1.addTextChangedListener(new TextWatcher() {
             @Override
@@ -204,7 +216,7 @@ public class ItemActivity extends AppCompatActivity {
     /**
      * Método Get item id -> método que serve para quando carregarmos num item qualquer
      * irmos para outra atividade onde vamos ver os detalhes do item seleionado
-     *
+     * <p>
      * Para isso a primeira coisa a fazer é por um setOnItemClickListener() na lista
      * De seguida para o item naquela posição vamos guardar o valor no nome, id e o
      * id atributo
@@ -330,13 +342,13 @@ public class ItemActivity extends AppCompatActivity {
 
     /**
      * Btn pesquisa-> fazer pesquisa por datas
-     *
+     * <p>
      * Para fazer a pesquisa ambas as datas têm que estar preenchida, logo
      * se não tiveram vai aparecer um Toast
-     *
+     * <p>
      * Como no carrinho esta resposta também returna duas lista, items e kits.
      * Para só ser os itens vamos à resposta e getItems()
-     *
+     * <p>
      * Depois quando estiverem as datas vamos fazer um update à lista dos items, onde
      * vão só aprecer os itens que estão disponíveis para reserva entre as datas que
      * o utilizador pôs
@@ -383,6 +395,19 @@ public class ItemActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Btn pesquisa nome -> pesquisar por nome
+     *
+     * Para pesquisar pelo nome do item a primeira coisa a fazer é
+     * ir buscar o texto que esta no EditText correspondente.
+     *
+     * De seguida vamos verificar qual dos itens contém alguma coisa
+     * em comum com o que esta escrito no EditText, caso tenham isso em comum
+     * vamos adicionar esse item a uma nova lista.
+     *
+     * Por último criar um novo CustomAdapter com a lista dos itens com esse nome
+     * @param view the view
+     */
     public void btnPesquisaNome(View view) {
         String nome = pesquisaNome.getText().toString();
         List<Item> item;

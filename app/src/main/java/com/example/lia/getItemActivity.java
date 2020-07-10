@@ -37,6 +37,9 @@ public class getItemActivity extends AppCompatActivity {
     private Integer idAtributo;
     private String token;
 
+    /**
+     * ImageView image
+     */
     ImageView image;
 
     /**
@@ -98,6 +101,7 @@ public class getItemActivity extends AppCompatActivity {
      * Este método serve para o utilizador adicionar o item ao carrinho
      * Para isso começamos ir buscar as datas e verificar se estão preenchidas
      * E depois quando a resposta for positiva quer dizer que o item foi adicionado
+     *
      * @param view the view
      */
     public void btnCarrinho(View view) {

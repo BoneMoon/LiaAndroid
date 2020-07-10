@@ -69,6 +69,9 @@ public class KitActivity extends AppCompatActivity {
      */
     List<Kit> linhaKit;
 
+    /**
+     * EditText pesquisaNome
+     */
     EditText pesquisaNome;
 
 
@@ -142,6 +145,15 @@ public class KitActivity extends AppCompatActivity {
         data2.setText(data_fim);
     }
 
+    /**
+     * Método checkDates -> método onde verifico se o texto das datas é modificado
+     *
+     * Para isso uso o TextWatcher() e quando o utilizador estiver a mudar
+     * alguma das datas a lista dos kits é apagada.
+     *
+     * Chamo este métdo onde vou buscar a listas dos kits todos e ainda
+     * quando chamo a lista da pesquisa
+     */
     private void checkDates() {
         data1.addTextChangedListener(new TextWatcher() {
             @Override
@@ -260,7 +272,7 @@ public class KitActivity extends AppCompatActivity {
      *
      * Primeiramente fazemos um switch() e depois case() onde vamos ver caso ele carregue
      * no menu que tem o id o que acontece
-     *      *
+     *
      * no Logout:
      * O utilizador volta à atividade do inicio que neste caso é onde se encontra o login
      *
@@ -390,6 +402,20 @@ public class KitActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Btn pesquisa nome -> pesquisar por nome
+     *
+     * Para pesquisar pelo nome do kit a primeira coisa a fazer é
+     * ir buscar o texto que esta no EditText correspondente.
+     *
+     * De seguida vamos verificar qual dos kits contém alguma coisa
+     * em comum com o que esta escrito no EditText caso tenham isso em comum
+     * vamos adicionar esse kit a uma nova lista.
+     *
+     * Por último criar um novo CustomAdapterKit com a lista dos kits com esse nome
+     *
+     * @param view the view
+     */
     public void btnPesquisaNome(View view) {
         String nome = pesquisaNome.getText().toString();
         List<Kit> kit;
